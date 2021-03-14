@@ -1,6 +1,6 @@
 import { Application, Request, Response, NextFunction } from "express";
-import { SocketMessage } from "../socket/SocketMessage";
 import { RandomService } from "./RandomService";
+import { SocketMessage } from "../socket/SocketMessage";
 import { SocketService } from "../socket/SocketService";
 
 class RandomController {
