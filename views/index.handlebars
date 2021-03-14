@@ -1,0 +1,40 @@
+<label>
+  Number:
+  <input type="number" value="0" id="random-number-input">
+  <button id="random-number-button">New Value</button>
+</label>
+
+<label>
+  String:
+  <input type="string" value="" id="random-string-input">
+  <button id="random-string-button">New Value</button>
+</label>
+
+<script>
+  const ws = new WebSocket("ws://localhost:8080");
+
+  ws.onopen = console.log;
+  ws.onerror = console.error;
+
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+
+    switch (data.event) {
+      case "random-number":
+        document.querySelector("#random-number-input").value = data.value;
+        break;
+
+      case "random-string":
+        document.querySelector("#random-string-input").value = data.value;
+        break;
+    }
+  };
+
+  document
+    .querySelector("#random-number-button")
+    .addEventListener("click", () => ws.send("random-number"));
+
+  document
+    .querySelector("#random-string-button")
+    .addEventListener("click", () => ws.send("random-string"));
+</script>
