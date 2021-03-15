@@ -21,7 +21,7 @@ class RandomController {
 
     app.get("/api/random-string", this.getRandomStringRoute);
 
-    service.registerMessageHandler(this.getMessageResponse);
+    service.registerMessageHandler(this.getMessageResponse.bind(this));
   }
 
   /**
