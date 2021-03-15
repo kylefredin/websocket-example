@@ -16,25 +16,21 @@
   ws.onopen = console.log;
   ws.onerror = console.error;
 
-  ws.onmessage = (event) => {
-    const data = JSON.parse(event.data);
+  ws.onmessage = ({ data }) => {
+    const message = JSON.parse(data);
 
-    switch (data.event) {
-      case "random-number":
-        document.querySelector("#random-number-input").value = data.value;
-        break;
-
-      case "random-string":
-        document.querySelector("#random-string-input").value = data.value;
-        break;
+    if (message.event === "random-number") {
+      document.getElementById("random-number-input").value = message.value;
+    } else if (message.event === "random-string") {
+      document.getElementById("random-string-input").value = message.value;
     }
   };
 
   document
-    .querySelector("#random-number-button")
+    .getElementById("random-number-button")
     .addEventListener("click", () => ws.send("random-number"));
 
   document
-    .querySelector("#random-string-button")
+    .getElementById("random-string-button")
     .addEventListener("click", () => ws.send("random-string"));
 </script>
