@@ -1,11 +1,11 @@
 import { Application, Request, Response, NextFunction } from "express";
 import * as hbs from "express-handlebars";
 import { Server } from "ws";
-import { IndexController } from "./index/IndexController";
-import { RandomController } from "./random/RandomController";
-import { SocketService } from "./socket/SocketService";
+import { IndexController } from "../index/IndexController";
+import { RandomController } from "../random/RandomController";
+import { SocketService } from "../socket/SocketService";
 
-class Bootstrap {
+class ApplicationBootstrap {
   public setup(app: Application, server: Server) {
     this.setupEngine(app);
     this.setupErrorHandler(app);
@@ -36,6 +36,6 @@ class Bootstrap {
   }
 }
 
-export default Bootstrap;
+export default ApplicationBootstrap;
 
-export { Bootstrap };
+export { ApplicationBootstrap };
