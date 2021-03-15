@@ -1,5 +1,6 @@
 import { validate } from "class-validator";
 import { Server } from "ws";
+import { Logger } from "winston";
 import { SocketMessage } from "./SocketMessage";
 
 class SocketService {
@@ -9,6 +10,11 @@ class SocketService {
   private server: Server;
 
   /**
+   * @type {Logger}
+   */
+  private logger: Logger;
+
+  /**
    * @type {Function[]}
    */
   private handlers: Function[] = [];
@@ -16,8 +22,9 @@ class SocketService {
   /**
    * @param {Server} server
    */
-  public constructor(server: Server) {
+  public constructor(server: Server, logger: Logger) {
     this.server = server;
+    this.logger = logger;
 
     this.setup();
   }
@@ -29,9 +36,13 @@ class SocketService {
    */
   public setup(): void {
     this.server.on("connection", (socket) => {
-      socket.on("message", (data: string) =>
-        this.onSocketMessage(socket, data)
-      );
+      this.logger.info({ message: "Socket connection" });
+
+      socket.on("message", (data: string) => {
+        this.logger.info({ message: "Socket message", data });
+
+        this.onSocketMessage(socket, data);
+      });
     });
   }
 
@@ -57,7 +68,7 @@ class SocketService {
     const errors = await validate(message);
 
     if (errors.length > 0) {
-      console.error(errors);
+      this.logger.error(errors);
       return;
     }
 
