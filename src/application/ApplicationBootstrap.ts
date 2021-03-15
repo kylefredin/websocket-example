@@ -6,18 +6,37 @@ import { RandomController } from "../random/RandomController";
 import { SocketService } from "../socket/SocketService";
 
 class ApplicationBootstrap {
-  public setup(app: Application, server: Server) {
+  /**
+   * Setup the application
+   *
+   * @param {Application} app
+   * @param {Server} server
+   * @return {void}
+   */
+  public setup(app: Application, server: Server): void {
     this.setupEngine(app);
     this.setupErrorHandler(app);
     this.setupControllers(app, server);
   }
 
+  /**
+   * Setup the rendering engine for the application
+   *
+   * @param {Application} app
+   * @return {void}
+   */
   private setupEngine(app: Application): void {
     app.engine("handlebars", hbs());
 
     app.set("view engine", "handlebars");
   }
 
+  /**
+   * Setup the error handler for the application
+   *
+   * @param {Application} app
+   * @return {void}
+   */
   private setupErrorHandler(app: Application): void {
     app.use(
       (error: Error, _req: Request, _res: Response, _next: NextFunction) =>
@@ -25,6 +44,13 @@ class ApplicationBootstrap {
     );
   }
 
+  /**
+   * Setup the application controllers
+   *
+   * @param {Application} app
+   * @param {Server} server
+   * @return {void}
+   */
   private setupControllers(app: Application, server: Server): void {
     const service = new SocketService(server);
 

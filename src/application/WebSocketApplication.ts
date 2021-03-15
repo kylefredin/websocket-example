@@ -4,14 +4,31 @@ import { ApplicationBootstrap } from "./ApplicationBootstrap";
 import { Configuration } from "./Configuration";
 
 class WebSocketApplication {
+  /**
+   * @type {express.Application}
+   */
   public expressApplication: express.Application;
 
+  /**
+   * @type {Server}
+   */
   public websocketServer: Server;
 
+  /**
+   * @type {ApplicationBootstrap}
+   */
   public applicationBootstrap: ApplicationBootstrap;
 
+  /**
+   * @type {Configuration}
+   */
   private config: Configuration;
 
+  /**
+   * Setup the websocket application
+   *
+   * @param {Configuration} config
+   */
   public constructor(config: Configuration) {
     this.config = config;
 
@@ -26,7 +43,12 @@ class WebSocketApplication {
     this.applicationBootstrap = new ApplicationBootstrap();
   }
 
-  public start() {
+  /**
+   * Starts the WebSocket Application
+   *
+   * @return {void}
+   */
+  public start(): void {
     this.applicationBootstrap.setup(
       this.expressApplication,
       this.websocketServer
@@ -38,7 +60,10 @@ class WebSocketApplication {
     );
   }
 
-  private applicationListener() {
+  /**
+   * @return {void}
+   */
+  private applicationListener(): void {
     console.log(
       `App listening at http://${this.config.serverHost}:${this.config.serverPort}`
     );

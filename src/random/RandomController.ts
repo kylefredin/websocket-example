@@ -4,9 +4,19 @@ import { SocketMessage } from "../socket/SocketMessage";
 import { SocketService } from "../socket/SocketService";
 
 class RandomController {
+  /**
+   * @type {RandomService}
+   */
   public service: RandomService = new RandomService();
 
-  public setup(app: Application, service: SocketService) {
+  /**
+   * Setup the random controller
+   *
+   * @param {Application} app
+   * @param {SocketService} service
+   * @return {void}
+   */
+  public setup(app: Application, service: SocketService): void {
     app.get("/api/random-number", this.getRandomNumberRoute);
 
     app.get("/api/random-string", this.getRandomStringRoute);
@@ -16,6 +26,14 @@ class RandomController {
     );
   }
 
+  /**
+   * Get random number route handler
+   *
+   * @param {Request} _req
+   * @param {Response} res
+   * @param {NextFunction} _next
+   * @return {void}
+   */
   public getRandomNumberRoute(
     _req: Request,
     res: Response,
@@ -24,6 +42,14 @@ class RandomController {
     res.status(200).json({ value: this.service.getRandomNumber() });
   }
 
+  /**
+   * Get random string route handler
+   *
+   * @param {Request} _req
+   * @param {Response} res
+   * @param {NextFunction} _next
+   * @return {void}
+   */
   public async getRandomStringRoute(
     _req: Request,
     res: Response,
@@ -32,6 +58,12 @@ class RandomController {
     res.status(200).json({ value: await this.service.getRandomString() });
   }
 
+  /**
+   * Socket message handler for the random controller
+   *
+   * @param {SocketMessage} message
+   * @return {Promise<string>}
+   */
   public async getMessageResponse(message: SocketMessage): Promise<string> {
     if (message.event === "random-number") {
       message.value = this.service.getRandomNumber();
