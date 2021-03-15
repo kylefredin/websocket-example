@@ -1,7 +1,11 @@
+import { IsString, MinLength } from "class-validator";
+
 class SocketMessage {
   /**
    * @type {string}
    */
+  @IsString()
+  @MinLength(1)
   public event: string = "";
 
   /**
@@ -21,7 +25,7 @@ class SocketMessage {
    *
    * @return {string}
    */
-  public toString() {
+  public toString(): string {
     return JSON.stringify({ event: this.event, value: this.value });
   }
 }
