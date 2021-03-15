@@ -1,6 +1,6 @@
 import * as express from "express";
 import { Server } from "ws";
-import { ApplicationBootstrap } from "./ApplicationBootstrap";
+import { ExpressBootstrap } from "./ExpressBootstrap";
 import { Configuration } from "./Configuration";
 
 class WebSocketApplication {
@@ -15,9 +15,9 @@ class WebSocketApplication {
   public websocketServer: Server;
 
   /**
-   * @type {ApplicationBootstrap}
+   * @type {ExpressBootstrap}
    */
-  public applicationBootstrap: ApplicationBootstrap;
+  public expressBootstrap: ExpressBootstrap = new ExpressBootstrap();
 
   /**
    * @type {Configuration}
@@ -25,7 +25,10 @@ class WebSocketApplication {
   private config: Configuration;
 
   /**
-   * Setup the websocket application
+   * Setup the Websocket Application
+   *
+   * This class is responsible for combining the Express application,
+   * Websocket server and application bootstrap
    *
    * @param {Configuration} config
    */
@@ -39,8 +42,6 @@ class WebSocketApplication {
       host: config.websocketHost,
       noServer: true,
     });
-
-    this.applicationBootstrap = new ApplicationBootstrap();
   }
 
   /**
@@ -49,10 +50,7 @@ class WebSocketApplication {
    * @return {void}
    */
   public start(): void {
-    this.applicationBootstrap.setup(
-      this.expressApplication,
-      this.websocketServer
-    );
+    this.expressBootstrap.setup(this.expressApplication, this.websocketServer);
 
     this.expressApplication.listen(
       this.config.serverPort,

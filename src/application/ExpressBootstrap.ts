@@ -5,7 +5,7 @@ import { IndexController } from "../index/IndexController";
 import { RandomController } from "../random/RandomController";
 import { SocketService } from "../socket/SocketService";
 
-class ApplicationBootstrap {
+class ExpressBootstrap {
   /**
    * Setup the application
    *
@@ -62,6 +62,6 @@ class ApplicationBootstrap {
   }
 }
 
-export default ApplicationBootstrap;
+export default ExpressBootstrap;
 
-export { ApplicationBootstrap };
+export { ExpressBootstrap };
