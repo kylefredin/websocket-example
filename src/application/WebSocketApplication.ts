@@ -64,9 +64,7 @@ class WebSocketApplication {
    * @return {void}
    */
   private applicationListener(): void {
-    console.log(
-      `App listening at http://${this.config.serverHost}:${this.config.serverPort}`
-    );
+    console.log(`App listening at ${this.config.baseUrl}`);
   }
 }
 

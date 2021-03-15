@@ -31,6 +31,10 @@ class Configuration {
     this.websocketHost = environment.WEBSOCKET_HOST;
     this.websocketPort = Number(environment.WEBSOCKET_PORT);
   }
+
+  get baseUrl(): string {
+    return `http://${this.serverHost}:${this.serverPort}`;
+  }
 }
 
 export default Configuration;
